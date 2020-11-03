@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ELibraryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="AuthorId" />
+    </Key>
+    <Property Name="AuthorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FIO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Books" Relationship="Self.FK_Books_Authors" FromRole="Authors" ToRole="Books" />
+  </EntityType>
+  <EntityType Name="BookingStatus">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="BookReservationJournals" Relationship="Self.FK_BookReservationJournal_BookingStatuses" FromRole="BookingStatuses" ToRole="BookReservationJournal" />
+  </EntityType>
+  <EntityType Name="BookReservationJournal">
+    <Key>
+      <PropertyRef Name="RecordId" />
+    </Key>
+    <Property Name="RecordId" Type="Int32" Nullable="false" />
+    <Property Name="BookingStartDate" Type="DateTime" Precision="0" />
+    <Property Name="BookingEndDate" Type="DateTime" Precision="0" />
+    <Property Name="ReservationCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookingStatusId" Type="Int32" Nullable="false" />
+    <Property Name="ReaderId" Type="Int32" Nullable="false" />
+    <Property Name="BookId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BookingStatus" Relationship="Self.FK_BookReservationJournal_BookingStatuses" FromRole="BookReservationJournal" ToRole="BookingStatuses" />
+    <NavigationProperty Name="Book" Relationship="Self.FK_BookReservationJournal_Books" FromRole="BookReservationJournal" ToRole="Books" />
+    <NavigationProperty Name="Reader" Relationship="Self.FK_BookReservationJournal_Readers" FromRole="BookReservationJournal" ToRole="Readers" />
+  </EntityType>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="BookId" />
+    </Key>
+    <Property Name="BookId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AuthorId" Type="Int32" Nullable="false" />
+    <Property Name="PublishingYear" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CoverImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Genre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NumberOfCopies" Type="Int32" />
+    <Property Name="IsPublished" Type="Boolean" />
+    <Property Name="PenaltyPoint" Type="Int32" />
+    <Property Name="Tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Author" Relationship="Self.FK_Books_Authors" FromRole="Books" ToRole="Authors" />
+    <NavigationProperty Name="BookReservationJournals" Relationship="Self.FK_BookReservationJournal_Books" FromRole="Books" ToRole="BookReservationJournal" />
+  </EntityType>
+  <EntityType Name="Reader">
+    <Key>
+      <PropertyRef Name="ReaderId" />
+    </Key>
+    <Property Name="ReaderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FIO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BirthDate" Type="DateTime" Precision="0" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsCollegeEmployee" Type="Boolean" />
+    <Property Name="Rating" Type="Int32" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BookReservationJournals" Relationship="Self.FK_BookReservationJournal_Readers" FromRole="Readers" ToRole="BookReservationJournal" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Readers_Users" FromRole="Readers" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsBlocked" Type="Boolean" Nullable="false" />
+    <Property Name="RoleId" Type="Int32" />
+    <NavigationProperty Name="Readers" Relationship="Self.FK_Readers_Users" FromRole="Users" ToRole="Readers" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+  </EntityType>
+  <Association Name="FK_Books_Authors">
+    <End Role="Authors" Type="Self.Author" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Books" Type="Self.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Authors">
+        <PropertyRef Name="AuthorId" />
+      </Principal>
+      <Dependent Role="Books">
+        <PropertyRef Name="AuthorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookReservationJournal_BookingStatuses">
+    <End Role="BookingStatuses" Type="Self.BookingStatus" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BookReservationJournal" Type="Self.BookReservationJournal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookingStatuses">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="BookReservationJournal">
+        <PropertyRef Name="BookingStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookReservationJournal_Books">
+    <End Role="Books" Type="Self.Book" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BookReservationJournal" Type="Self.BookReservationJournal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="BookId" />
+      </Principal>
+      <Dependent Role="BookReservationJournal">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookReservationJournal_Readers">
+    <End Role="Readers" Type="Self.Reader" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BookReservationJournal" Type="Self.BookReservationJournal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Readers">
+        <PropertyRef Name="ReaderId" />
+      </Principal>
+      <Dependent Role="BookReservationJournal">
+        <PropertyRef Name="ReaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Readers_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Readers" Type="Self.Reader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Readers">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles">
+    <End Role="Roles" Type="Self.Role" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ELibraryDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Authors" EntityType="Self.Author" />
+    <EntitySet Name="BookingStatuses" EntityType="Self.BookingStatus" />
+    <EntitySet Name="BookReservationJournals" EntityType="Self.BookReservationJournal" />
+    <EntitySet Name="Books" EntityType="Self.Book" />
+    <EntitySet Name="Readers" EntityType="Self.Reader" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Books_Authors" Association="Self.FK_Books_Authors">
+      <End Role="Authors" EntitySet="Authors" />
+      <End Role="Books" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookReservationJournal_BookingStatuses" Association="Self.FK_BookReservationJournal_BookingStatuses">
+      <End Role="BookingStatuses" EntitySet="BookingStatuses" />
+      <End Role="BookReservationJournal" EntitySet="BookReservationJournals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookReservationJournal_Books" Association="Self.FK_BookReservationJournal_Books">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="BookReservationJournal" EntitySet="BookReservationJournals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookReservationJournal_Readers" Association="Self.FK_BookReservationJournal_Readers">
+      <End Role="Readers" EntitySet="Readers" />
+      <End Role="BookReservationJournal" EntitySet="BookReservationJournals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Readers_Users" Association="Self.FK_Readers_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Readers" EntitySet="Readers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

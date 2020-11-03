@@ -1,0 +1,30 @@
+﻿<Window x:Class="ELibraryApp.Views.RegistrationWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELibraryApp.Views"
+        mc:Ignorable="d"
+        Title="Регистрация" Height="378.151" Width="369">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid Margin="0,0,2,-4">
+        <Label Content="Логин" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="140" Height="40" FontSize="18" FontFamily="Arial" VerticalContentAlignment="Center"/>
+        <Label Content="Пароль" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="140" Height="40" FontSize="18" FontFamily="Arial" VerticalContentAlignment="Center"/>
+        <Label Content="ФИО" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="140" Height="40" FontSize="18" FontFamily="Arial" VerticalContentAlignment="Center"/>
+        <Label Content="Телефон" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="140" Height="40" FontSize="18" FontFamily="Arial" VerticalContentAlignment="Center"/>
+        <Label Content="Дата рождения" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="140" Height="40" FontSize="18" FontFamily="Arial" VerticalContentAlignment="Center"/>
+        <TextBox Name="LoginTextBox" HorizontalAlignment="Left" Height="40" Margin="155,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" FontSize="18" FontFamily="Arial" VerticalContentAlignment="Center" BorderBrush="Black"/>
+        <TextBox Name="PassTextBox" HorizontalAlignment="Left" Height="40" Margin="155,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" FontSize="18" FontFamily="Arial" VerticalContentAlignment="Center" BorderBrush="Black"/>
+        <TextBox Name="FIOTextBox" HorizontalAlignment="Left" Height="40" Margin="155,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" FontSize="18" FontFamily="Arial" VerticalContentAlignment="Center" BorderBrush="Black"/>
+        <TextBox Name="PhoneTextBox" HorizontalAlignment="Left" Height="40" Margin="155,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" FontSize="18" FontFamily="Arial" VerticalContentAlignment="Center" BorderBrush="Black"/>
+        <Button Content="Войти" HorizontalAlignment="Left" Margin="88,247,0,0" VerticalAlignment="Top" Width="167" Height="40" FontSize="24" FontFamily="Arial" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFA5D7E2" BorderBrush="Black" Click="EnterButton_Click"/>
+        <CheckBox Name="IsEmpCheckBox" Content="Работник колледжа" HorizontalAlignment="Left" Margin="88,309,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Arial" VerticalContentAlignment="Center" Width="187"/>
+        <DatePicker Name="BirthDatePicker" HorizontalAlignment="Left" Margin="155,190,0,0" VerticalAlignment="Top" Height="40" Width="196" BorderBrush="{x:Null}" FontSize="24" FontFamily="Arial"/>
+
+    </Grid>
+</Window>
